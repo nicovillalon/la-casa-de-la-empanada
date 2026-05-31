@@ -1,256 +1,325 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>La Esquina del Sabor — Carta</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<title>La Esquina del Sabor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --verde:    #2d6a4f;
-    --verde2:   #40916c;
-    --dorado:   #d4a017;
-    --crema:    #fdf8f0;
-    --texto:    #1a1a1a;
-    --gris:     #6b6b6b;
-    --fondo:    #f5f0e8;
-    --borde:    #e8dfc8;
-    --rojo:     #c0392b;
+    --rojo:    #fa0050;
+    --rojo2:   #d4003e;
+    --gris-bg: #f5f5f5;
+    --blanco:  #ffffff;
+    --texto:   #222222;
+    --gris:    #717171;
+    --borde:   #e8e8e8;
+    --verde-wa:#25d366;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--fondo);
+    font-family: 'Inter', sans-serif;
+    background: var(--gris-bg);
     color: var(--texto);
     min-height: 100vh;
-    padding-bottom: 120px;
+    padding-bottom: 130px;
   }
 
-  /* ── HEADER ── */
-  header {
-    background: var(--verde);
-    padding: 28px 20px 22px;
-    text-align: center;
+  /* ── COVER ── */
+  #cover {
+    width: 100%;
+    height: 240px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     position: relative;
     overflow: hidden;
   }
 
-  header::before {
+  #cover::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 30% 0%, rgba(212,160,23,0.25) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 100%, rgba(64,145,108,0.4) 0%, transparent 50%);
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(250,0,80,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,165,0,0.2) 0%, transparent 40%);
   }
 
-  .logo-wrap { position: relative; z-index: 1; }
-
-  .logo-icon {
-    font-size: 42px;
-    display: block;
-    margin-bottom: 6px;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  .cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 100%);
   }
 
-  header h1 {
-    font-family: 'Playfair Display', serif;
+  .cover-emoji {
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 58px;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+    z-index: 1;
+    animation: flotar 3s ease-in-out infinite;
+  }
+
+  @keyframes flotar {
+    0%,100% { transform: translate(-50%, -50%); }
+    50%     { transform: translate(-50%, -60%); }
+  }
+
+  .cover-nombre {
+    position: absolute;
+    bottom: 18px;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 2;
+    padding: 0 16px;
+  }
+
+  .cover-nombre h1 {
     font-size: 26px;
-    font-weight: 900;
+    font-weight: 800;
     color: #fff;
     letter-spacing: -0.5px;
     line-height: 1.1;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
   }
 
-  header p {
-    color: rgba(255,255,255,0.75);
+  .cover-nombre p {
     font-size: 13px;
-    margin-top: 5px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 4px;
     font-weight: 500;
   }
 
-  .badge-delivery {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: var(--dorado);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-top: 10px;
-    letter-spacing: 0.3px;
-  }
-
-  /* ── INFO BAR ── */
-  .info-bar {
-    background: var(--crema);
-    border-bottom: 1px solid var(--borde);
-    padding: 10px 20px;
+  .cover-pills {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
   }
 
-  .info-item {
+  .cover-pill {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+  }
+
+  .cover-pill.destac {
+    background: var(--rojo);
+    border-color: var(--rojo);
+  }
+
+  /* ── TARJETA DEL LOCAL ── */
+  #local-card {
+    background: var(--blanco);
+    margin: 0 0 8px;
+    padding: 16px 16px 0;
+    position: relative;
+  }
+
+  .local-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fa0050, #ff6b35);
+    border: 3px solid var(--blanco);
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    color: var(--gris);
-    font-weight: 500;
+    justify-content: center;
+    font-size: 36px;
+    position: absolute;
+    top: -36px;
+    left: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    z-index: 2;
   }
 
-  .info-item span:first-child { font-size: 15px; }
+  .local-info {
+    padding-top: 44px;
+    padding-bottom: 14px;
+  }
+
+  .local-nombre {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--texto);
+    line-height: 1.2;
+  }
+
+  .local-tipo {
+    font-size: 13px;
+    color: var(--gris);
+    margin-top: 3px;
+  }
+
+  .local-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--gris-bg);
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto);
+  }
+
+  .badge.verde { background: #e8f8ef; color: #1a7a3f; }
+  .badge.rojo  { background: #fff0f3; color: var(--rojo); }
 
   /* ── CATEGORÍAS ── */
-  .cats {
+  #cats {
+    background: var(--blanco);
     display: flex;
-    gap: 8px;
-    padding: 14px 16px;
+    gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
-    background: var(--crema);
     border-bottom: 1px solid var(--borde);
     position: sticky;
     top: 0;
     z-index: 10;
   }
 
-  .cats::-webkit-scrollbar { display: none; }
+  #cats::-webkit-scrollbar { display: none; }
 
   .cat-btn {
     flex-shrink: 0;
     background: none;
-    border: 1.5px solid var(--borde);
-    border-radius: 20px;
-    padding: 6px 14px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 14px 16px;
     font-size: 13px;
     font-weight: 600;
     color: var(--gris);
     cursor: pointer;
-    transition: all 0.2s;
     font-family: inherit;
     white-space: nowrap;
+    transition: all 0.2s;
   }
 
   .cat-btn.activo {
-    background: var(--verde);
-    border-color: var(--verde);
-    color: #fff;
+    color: var(--rojo);
+    border-bottom-color: var(--rojo);
   }
 
   /* ── SECCIONES ── */
   .seccion {
-    padding: 20px 16px 4px;
+    background: var(--blanco);
+    margin-bottom: 8px;
+    padding: 16px;
   }
 
   .seccion-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--verde);
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--texto);
+    margin-bottom: 4px;
+  }
+
+  .seccion-sub {
+    font-size: 12px;
+    color: var(--gris);
     margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
-  .seccion-titulo::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--borde);
-  }
-
-  /* ── CARDS DE PRODUCTOS ── */
+  /* ── PRODUCTO ── */
   .producto {
-    background: var(--crema);
-    border: 1px solid var(--borde);
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: transform 0.15s, box-shadow 0.15s;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--borde);
     cursor: pointer;
+    transition: background 0.15s;
     position: relative;
-    overflow: hidden;
   }
 
-  .producto:active { transform: scale(0.98); }
-
-  .producto.en-carrito {
-    border-color: var(--verde2);
-    background: #f0faf5;
-  }
+  .producto:last-child { border-bottom: none; }
 
   .prod-emoji {
-    font-size: 38px;
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background: var(--gris-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
     flex-shrink: 0;
-    line-height: 1;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    overflow: hidden;
   }
 
   .prod-info { flex: 1; min-width: 0; }
 
   .prod-nombre {
-    font-weight: 600;
     font-size: 14px;
+    font-weight: 700;
+    color: var(--texto);
     line-height: 1.3;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   .prod-desc {
     font-size: 12px;
     color: var(--gris);
     line-height: 1.4;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .prod-precio {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
-    color: var(--verde);
+    color: var(--texto);
   }
 
-  .prod-accion {
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
+  /* Botón agregar estilo PedidosYa */
+  .prod-accion { flex-shrink: 0; }
 
   .btn-agregar {
     width: 36px;
     height: 36px;
-    background: var(--verde);
-    border: none;
+    background: var(--blanco);
+    border: 2px solid var(--rojo);
     border-radius: 50%;
-    color: white;
-    font-size: 20px;
+    color: var(--rojo);
+    font-size: 22px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s, transform 0.15s;
+    transition: all 0.2s;
     font-family: inherit;
     line-height: 1;
+    font-weight: 300;
   }
 
-  .btn-agregar:active { transform: scale(0.9); background: var(--verde2); }
+  .btn-agregar:active { background: var(--rojo); color: white; transform: scale(0.9); }
 
-  /* Contador inline en el card */
   .contador-inline {
     display: none;
     align-items: center;
-    gap: 0;
-    background: var(--verde);
+    background: var(--rojo);
     border-radius: 20px;
     overflow: hidden;
   }
@@ -258,24 +327,25 @@
   .contador-inline.visible { display: flex; }
 
   .cnt-btn {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     background: none;
     border: none;
     color: white;
-    font-size: 17px;
+    font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: inherit;
+    font-weight: 600;
   }
 
   .cnt-num {
     color: white;
     font-size: 14px;
     font-weight: 700;
-    min-width: 22px;
+    min-width: 20px;
     text-align: center;
   }
 
@@ -286,9 +356,8 @@
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 12px 16px;
-    background: var(--fondo);
-    border-top: 1px solid var(--borde);
+    padding: 12px 16px 20px;
+    background: transparent;
     transform: translateY(100%);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -297,148 +366,172 @@
 
   .btn-carrito {
     width: 100%;
-    background: #25d366;
+    background: var(--rojo);
     border: none;
     border-radius: 14px;
-    padding: 16px 20px;
+    padding: 0 16px;
+    height: 54px;
     display: flex;
     align-items: center;
     cursor: pointer;
     font-family: inherit;
     transition: background 0.2s, transform 0.15s;
     gap: 12px;
+    box-shadow: 0 4px 20px rgba(250,0,80,0.4);
   }
 
-  .btn-carrito:active { transform: scale(0.98); background: #1ebe57; }
-
-  .wa-icon { font-size: 24px; }
-
-  .carrito-texto { flex: 1; text-align: left; }
-
-  .carrito-titulo {
-    font-size: 15px;
-    font-weight: 700;
-    color: #fff;
-    display: block;
-  }
-
-  .carrito-sub {
-    font-size: 12px;
-    color: rgba(255,255,255,0.85);
-    display: block;
-    margin-top: 1px;
-  }
-
-  .carrito-total {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-  }
+  .btn-carrito:active { transform: scale(0.98); background: var(--rojo2); }
 
   .carrito-badge {
-    background: #fff;
-    color: #25d366;
+    background: rgba(255,255,255,0.25);
+    color: white;
     font-size: 12px;
     font-weight: 700;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
-  /* ── MODAL RESUMEN ── */
+  .carrito-texto {
+    flex: 1;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .carrito-total-btn {
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  /* ── MODAL ── */
   #overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     z-index: 200;
-    backdrop-filter: blur(3px);
   }
 
   #overlay.visible { display: flex; align-items: flex-end; }
 
   #modal {
-    background: var(--crema);
-    border-radius: 24px 24px 0 0;
-    padding: 24px 20px 32px;
+    background: var(--blanco);
+    border-radius: 20px 20px 0 0;
+    padding: 0 0 32px;
     width: 100%;
-    max-height: 85vh;
+    max-height: 90vh;
     overflow-y: auto;
     animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
+  .modal-header {
+    padding: 16px 16px 0;
+    position: sticky;
+    top: 0;
+    background: var(--blanco);
+    z-index: 1;
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 12px;
+  }
+
   .modal-handle {
-    width: 40px;
+    width: 36px;
     height: 4px;
     background: var(--borde);
     border-radius: 2px;
-    margin: 0 auto 20px;
+    margin: 0 auto 14px;
   }
 
   .modal-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: var(--verde);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--texto);
   }
 
+  .modal-body { padding: 16px; }
+
+  /* Items del resumen */
   .resumen-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    gap: 12px;
+    padding: 12px 0;
     border-bottom: 1px solid var(--borde);
-    font-size: 14px;
   }
 
   .resumen-item:last-child { border-bottom: none; }
 
-  .resumen-nombre { font-weight: 500; }
-  .resumen-cant { color: var(--gris); font-size: 12px; }
-  .resumen-precio { font-weight: 700; color: var(--verde); font-size: 15px; }
+  .res-emoji {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--gris-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
 
-  .resumen-total {
-    background: var(--verde);
-    color: white;
+  .res-info { flex: 1; }
+  .res-nombre { font-size: 13px; font-weight: 700; }
+  .res-cant { font-size: 12px; color: var(--gris); margin-top: 2px; }
+  .res-precio { font-size: 14px; font-weight: 700; color: var(--texto); }
+
+  /* Total */
+  .resumen-total-wrap {
+    background: var(--gris-bg);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 14px;
+    margin: 14px 0;
+  }
+
+  .total-fila {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin: 16px 0;
+    font-size: 13px;
+    color: var(--gris);
+    margin-bottom: 6px;
   }
 
-  .resumen-total span:first-child { font-weight: 600; font-size: 15px; }
-  .resumen-total span:last-child {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-  }
-
-  /* Selección delivery/retiro */
-  .tipo-label {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 10px;
+  .total-fila.grande {
+    font-size: 16px;
+    font-weight: 800;
     color: var(--texto);
+    margin-bottom: 0;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--borde);
+  }
+
+  /* Entrega */
+  .seccion-modal { margin-bottom: 16px; }
+
+  .modal-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--texto);
+    margin-bottom: 10px;
   }
 
   .tipo-opciones {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
-    margin-bottom: 14px;
   }
 
   .tipo-btn {
-    background: var(--crema);
+    background: var(--blanco);
     border: 2px solid var(--borde);
     border-radius: 12px;
     padding: 12px 8px;
@@ -448,24 +541,16 @@
     transition: all 0.2s;
   }
 
-  .tipo-btn.sel {
-    border-color: var(--verde);
-    background: #f0faf5;
-  }
-
-  .tipo-btn .tipo-icon { font-size: 24px; display: block; margin-bottom: 4px; }
+  .tipo-btn.sel { border-color: var(--rojo); background: #fff0f3; }
+  .tipo-btn .tipo-icon { font-size: 22px; display: block; margin-bottom: 4px; }
   .tipo-btn .tipo-txt { font-size: 13px; font-weight: 600; color: var(--texto); }
 
-  #campo-direccion {
-    display: none;
-    margin-bottom: 14px;
-  }
-
+  #campo-direccion { display: none; margin-top: 10px; }
   #campo-direccion.visible { display: block; }
 
   #campo-direccion input {
     width: 100%;
-    background: white;
+    background: var(--gris-bg);
     border: 1.5px solid var(--borde);
     border-radius: 10px;
     padding: 12px 14px;
@@ -475,11 +560,78 @@
     color: var(--texto);
   }
 
-  #campo-direccion input:focus { border-color: var(--verde); }
+  #campo-direccion input:focus { border-color: var(--rojo); }
 
+  /* Pago */
+  .pago-opciones { display: flex; flex-direction: column; gap: 8px; }
+
+  .pago-btn {
+    background: var(--blanco);
+    border: 2px solid var(--borde);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .pago-btn.sel { border-color: var(--rojo); background: #fff0f3; }
+
+  .pago-icon { font-size: 22px; flex-shrink: 0; }
+  .pago-info { flex: 1; }
+  .pago-nombre { font-size: 14px; font-weight: 600; color: var(--texto); display: block; }
+  .pago-desc { font-size: 11px; color: var(--gris); display: block; margin-top: 1px; }
+
+  .pago-check {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--borde); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: white; transition: all 0.2s;
+  }
+
+  .pago-btn.sel .pago-check { background: var(--rojo); border-color: var(--rojo); }
+
+  /* Caja transferencia */
+  #caja-transferencia {
+    display: none;
+    background: #fff0f3;
+    border: 2px solid var(--rojo);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 10px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  #caja-transferencia.visible { display: block; }
+
+  @keyframes fadeIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+  .transf-titulo { font-weight: 700; font-size: 13px; color: var(--rojo); margin-bottom: 10px; }
+
+  .transf-fila {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; border-bottom: 1px solid rgba(250,0,80,0.1);
+    font-size: 13px;
+  }
+
+  .transf-fila:last-of-type { border-bottom: none; }
+  .transf-label { color: var(--gris); font-weight: 500; }
+  .transf-val { font-weight: 700; color: var(--texto); text-align: right; }
+  .transf-copy { color: var(--rojo); cursor: pointer; text-decoration: underline dotted; }
+
+  .transf-aviso {
+    margin-top: 10px; background: #fff8e1;
+    border: 1px solid #ffe082; border-radius: 8px;
+    padding: 9px 11px; font-size: 12px; color: #7b5800; line-height: 1.5;
+  }
+
+  /* Botón confirmar */
   .btn-confirmar {
     width: 100%;
-    background: #25d366;
+    background: var(--rojo);
     border: none;
     border-radius: 14px;
     padding: 16px;
@@ -492,174 +644,73 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background 0.2s, transform 0.15s;
+    transition: all 0.2s;
+    margin-top: 16px;
+    box-shadow: 0 4px 16px rgba(250,0,80,0.3);
   }
 
-  .btn-confirmar:active { transform: scale(0.98); background: #1ebe57; }
+  .btn-confirmar:active { transform: scale(0.98); background: var(--rojo2); }
 
   .btn-cancelar {
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--gris);
-    font-size: 14px;
-    padding: 12px;
-    cursor: pointer;
-    font-family: inherit;
-    margin-top: 6px;
+    width: 100%; background: none; border: none;
+    color: var(--gris); font-size: 14px; padding: 12px;
+    cursor: pointer; font-family: inherit; margin-top: 4px;
   }
 
-  /* ── PAGO ── */
-  .pago-label {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: var(--texto);
-  }
-
-  .pago-opciones {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-
-  .pago-btn {
-    background: var(--crema);
-    border: 2px solid var(--borde);
-    border-radius: 12px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s;
-    text-align: left;
-  }
-
-  .pago-btn.sel {
-    border-color: var(--verde);
-    background: #f0faf5;
-  }
-
-  .pago-icon { font-size: 22px; flex-shrink: 0; }
-
-  .pago-info { flex: 1; }
-  .pago-nombre { font-size: 14px; font-weight: 600; color: var(--texto); display: block; }
-  .pago-desc   { font-size: 11px; color: var(--gris); display: block; margin-top: 1px; }
-
-  .pago-check {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    border: 2px solid var(--borde);
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: white;
-    transition: all 0.2s;
-  }
-
-  .pago-btn.sel .pago-check {
-    background: var(--verde);
-    border-color: var(--verde);
-  }
-
-  /* ── CAJA TRANSFERENCIA ── */
-  #caja-transferencia {
-    display: none;
-    background: #f0faf5;
-    border: 2px solid var(--verde2);
-    border-radius: 14px;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-    animation: fadeIn 0.3s ease;
-  }
-
-  #caja-transferencia.visible { display: block; }
-
-  @keyframes fadeIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
-
-  .transf-titulo {
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--verde);
-    margin-bottom: 10px;
-  }
-
-  .transf-fila {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid #d4eddf;
-    font-size: 13px;
-  }
-
-  .transf-fila:last-of-type { border-bottom: none; }
-
-  .transf-label { color: var(--gris); font-weight: 500; }
-
-  .transf-val { font-weight: 600; color: var(--texto); text-align: right; }
-
-  .transf-copy {
-    color: var(--verde);
-    cursor: pointer;
-    text-decoration: underline dotted;
-  }
-
-  .transf-aviso {
-    margin-top: 10px;
-    background: #fff8e1;
-    border: 1px solid #ffe082;
-    border-radius: 8px;
-    padding: 9px 11px;
-    font-size: 12px;
-    color: #7b5800;
-    line-height: 1.5;
-  }
-
-  /* ── ANIMACIÓN AGREGAR ── */
-  @keyframes pop { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-  .pop { animation: pop 0.25s ease; }
-
+  /* Animación pop */
+  @keyframes pop { 0%,100% { transform:scale(1); } 50% { transform:scale(1.12); } }
+  .pop { animation: pop 0.2s ease; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="logo-wrap">
-    <span class="logo-icon">🌮</span>
+<!-- COVER / IMAGEN DE PORTADA -->
+<div id="cover">
+  <div class="cover-overlay"></div>
+  <div class="cover-emoji">🌮</div>
+  <div class="cover-nombre">
     <h1>La Esquina del Sabor</h1>
     <p>Comida casera y rica · Córdoba</p>
-    <div class="badge-delivery">🛵 &nbsp;Delivery y retiro en local</div>
+    <div class="cover-pills">
+      <span class="cover-pill destac">🛵 Delivery</span>
+      <span class="cover-pill">⏱️ 30–45 min</span>
+      <span class="cover-pill">🕐 11:00–23:00</span>
+    </div>
   </div>
-</header>
+</div>
 
-<!-- INFO BAR -->
-<div class="info-bar">
-  <div class="info-item"><span>🕐</span><span>11:00 – 23:00</span></div>
-  <div class="info-item"><span>⏱️</span><span>30–45 min</span></div>
-  <div class="info-item"><span>💳</span><span>Efectivo / MP</span></div>
+<!-- TARJETA DEL LOCAL -->
+<div id="local-card">
+  <div class="local-avatar">🌮</div>
+  <div class="local-info">
+    <div class="local-nombre">La Esquina del Sabor</div>
+    <div class="local-tipo">Comida casera y rica · Córdoba</div>
+  </div>
+  <div class="local-badges">
+    <div class="badge verde">⏱️ 30–45 min</div>
+    <div class="badge">🕐 11:00 – 23:00</div>
+    <div class="badge">💳 Efectivo / Transferencia / MP</div>
+    <div class="badge rojo">🛵 Delivery disponible</div>
+  </div>
 </div>
 
 <!-- CATEGORÍAS -->
-<div class="cats" id="cats">
-  <button class="cat-btn activo" onclick="scrollTo('principales')">🍽️ Principales</button>
-  <button class="cat-btn" onclick="scrollTo('empanadas')">🥟 Empanadas</button>
-  <button class="cat-btn" onclick="scrollTo('guarniciones')">🥗 Guarniciones</button>
-  <button class="cat-btn" onclick="scrollTo('postres')">🍮 Postres</button>
-  <button class="cat-btn" onclick="scrollTo('bebidas')">🥤 Bebidas</button>
+<div id="cats">
+  <button class="cat-btn activo" onclick="irA('principales', this)">🍽️ Principales</button>
+  <button class="cat-btn" onclick="irA('empanadas', this)">🥟 Empanadas</button>
+  <button class="cat-btn" onclick="irA('guarniciones', this)">🥗 Guarniciones</button>
+  <button class="cat-btn" onclick="irA('postres', this)">🍮 Postres</button>
+  <button class="cat-btn" onclick="irA('bebidas', this)">🥤 Bebidas</button>
 </div>
 
 <!-- MENÚ -->
 <div id="menu">
 
-  <!-- PRINCIPALES -->
   <div class="seccion" id="sec-principales">
     <div class="seccion-titulo">🍽️ Platos Principales</div>
+    <div class="seccion-sub">Comida casera de todos los días</div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="p1" data-nombre="Milanesa de ternera con papas" data-precio="4500" data-emoji="🥩">
+    <div class="producto" data-id="p1" data-nombre="Milanesa de ternera con papas" data-precio="4500" data-emoji="🥩">
       <div class="prod-emoji">🥩</div>
       <div class="prod-info">
         <div class="prod-nombre">Milanesa de ternera con papas</div>
@@ -669,14 +720,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="p2" data-nombre="Pollo al horno con arroz" data-precio="4200" data-emoji="🍗">
+    <div class="producto" data-id="p2" data-nombre="Pollo al horno con arroz" data-precio="4200" data-emoji="🍗">
       <div class="prod-emoji">🍗</div>
       <div class="prod-info">
         <div class="prod-nombre">Pollo al horno con arroz</div>
@@ -686,14 +737,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="p3" data-nombre="Guiso de lentejas" data-precio="3500" data-emoji="🍲">
+    <div class="producto" data-id="p3" data-nombre="Guiso de lentejas" data-precio="3500" data-emoji="🍲">
       <div class="prod-emoji">🍲</div>
       <div class="prod-info">
         <div class="prod-nombre">Guiso de lentejas</div>
@@ -703,14 +754,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="p4" data-nombre="Tarta de verdura y queso" data-precio="3000" data-emoji="🥧">
+    <div class="producto" data-id="p4" data-nombre="Tarta de verdura y queso" data-precio="3000" data-emoji="🥧">
       <div class="prod-emoji">🥧</div>
       <div class="prod-info">
         <div class="prod-nombre">Tarta de verdura y queso</div>
@@ -720,19 +771,19 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- EMPANADAS -->
   <div class="seccion" id="sec-empanadas">
     <div class="seccion-titulo">🥟 Empanadas</div>
+    <div class="seccion-sub">Rellenos caseros, masa artesanal</div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="e1" data-nombre="Empanada de carne cortada a cuchillo" data-precio="900" data-emoji="🥟">
+    <div class="producto" data-id="e1" data-nombre="Empanada de carne cortada a cuchillo" data-precio="900" data-emoji="🥟">
       <div class="prod-emoji">🥟</div>
       <div class="prod-info">
         <div class="prod-nombre">Empanada de carne cortada a cuchillo</div>
@@ -742,14 +793,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="e2" data-nombre="Empanada de pollo" data-precio="900" data-emoji="🥟">
+    <div class="producto" data-id="e2" data-nombre="Empanada de pollo" data-precio="900" data-emoji="🥟">
       <div class="prod-emoji">🥟</div>
       <div class="prod-info">
         <div class="prod-nombre">Empanada de pollo</div>
@@ -759,14 +810,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="e3" data-nombre="Empanada de jamón y queso" data-precio="850" data-emoji="🥟">
+    <div class="producto" data-id="e3" data-nombre="Empanada de jamón y queso" data-precio="850" data-emoji="🥟">
       <div class="prod-emoji">🥟</div>
       <div class="prod-info">
         <div class="prod-nombre">Empanada de jamón y queso</div>
@@ -776,14 +827,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="e4" data-nombre="Docena de empanadas de carne" data-precio="9500" data-emoji="📦">
+    <div class="producto" data-id="e4" data-nombre="Docena de empanadas de carne" data-precio="9500" data-emoji="📦">
       <div class="prod-emoji">📦</div>
       <div class="prod-info">
         <div class="prod-nombre">Docena de empanadas de carne</div>
@@ -793,19 +844,19 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- GUARNICIONES -->
   <div class="seccion" id="sec-guarniciones">
     <div class="seccion-titulo">🥗 Guarniciones</div>
+    <div class="seccion-sub">Para acompañar tu plato</div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="g1" data-nombre="Ensalada mixta" data-precio="1500" data-emoji="🥗">
+    <div class="producto" data-id="g1" data-nombre="Ensalada mixta" data-precio="1500" data-emoji="🥗">
       <div class="prod-emoji">🥗</div>
       <div class="prod-info">
         <div class="prod-nombre">Ensalada mixta</div>
@@ -815,14 +866,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="g2" data-nombre="Puré de papas casero" data-precio="1400" data-emoji="🥔">
+    <div class="producto" data-id="g2" data-nombre="Puré de papas casero" data-precio="1400" data-emoji="🥔">
       <div class="prod-emoji">🥔</div>
       <div class="prod-info">
         <div class="prod-nombre">Puré de papas casero</div>
@@ -832,14 +883,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="g3" data-nombre="Arroz blanco" data-precio="1000" data-emoji="🍚">
+    <div class="producto" data-id="g3" data-nombre="Arroz blanco" data-precio="1000" data-emoji="🍚">
       <div class="prod-emoji">🍚</div>
       <div class="prod-info">
         <div class="prod-nombre">Arroz blanco</div>
@@ -849,19 +900,19 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- POSTRES -->
   <div class="seccion" id="sec-postres">
     <div class="seccion-titulo">🍮 Postres</div>
+    <div class="seccion-sub">El toque dulce final</div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="po1" data-nombre="Flan casero con dulce de leche" data-precio="1800" data-emoji="🍮">
+    <div class="producto" data-id="po1" data-nombre="Flan casero con dulce de leche" data-precio="1800" data-emoji="🍮">
       <div class="prod-emoji">🍮</div>
       <div class="prod-info">
         <div class="prod-nombre">Flan casero con dulce de leche</div>
@@ -871,14 +922,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="po2" data-nombre="Budín de pan" data-precio="1600" data-emoji="🍞">
+    <div class="producto" data-id="po2" data-nombre="Budín de pan" data-precio="1600" data-emoji="🍞">
       <div class="prod-emoji">🍞</div>
       <div class="prod-info">
         <div class="prod-nombre">Budín de pan</div>
@@ -888,14 +939,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="po3" data-nombre="Alfajor casero" data-precio="1200" data-emoji="🍪">
+    <div class="producto" data-id="po3" data-nombre="Alfajor casero" data-precio="1200" data-emoji="🍪">
       <div class="prod-emoji">🍪</div>
       <div class="prod-info">
         <div class="prod-nombre">Alfajor casero</div>
@@ -905,19 +956,19 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- BEBIDAS -->
   <div class="seccion" id="sec-bebidas">
     <div class="seccion-titulo">🥤 Bebidas</div>
+    <div class="seccion-sub">Para acompañar tu pedido</div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="b1" data-nombre="Gaseosa 500ml" data-precio="900" data-emoji="🥤">
+    <div class="producto" data-id="b1" data-nombre="Gaseosa 500ml" data-precio="900" data-emoji="🥤">
       <div class="prod-emoji">🥤</div>
       <div class="prod-info">
         <div class="prod-nombre">Gaseosa 500ml</div>
@@ -927,14 +978,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="b2" data-nombre="Agua mineral" data-precio="700" data-emoji="💧">
+    <div class="producto" data-id="b2" data-nombre="Agua mineral" data-precio="700" data-emoji="💧">
       <div class="prod-emoji">💧</div>
       <div class="prod-info">
         <div class="prod-nombre">Agua mineral</div>
@@ -944,14 +995,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="b3" data-nombre="Jugo natural" data-precio="1200" data-emoji="🍊">
+    <div class="producto" data-id="b3" data-nombre="Jugo natural" data-precio="1200" data-emoji="🍊">
       <div class="prod-emoji">🍊</div>
       <div class="prod-info">
         <div class="prod-nombre">Jugo natural</div>
@@ -961,14 +1012,14 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
 
-    <div class="producto" onclick="toggleProducto(this)" data-id="b4" data-nombre="Café con leche" data-precio="800" data-emoji="☕">
+    <div class="producto" data-id="b4" data-nombre="Café con leche" data-precio="800" data-emoji="☕">
       <div class="prod-emoji">☕</div>
       <div class="prod-info">
         <div class="prod-nombre">Café con leche</div>
@@ -978,470 +1029,185 @@
       <div class="prod-accion">
         <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
         <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,-1)">−</button>
           <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
+          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this,1)">+</button>
         </div>
       </div>
     </div>
   </div>
 
-</div>
-
-<!-- MENÚ -->
-<div id="menu">
-
-  <!-- BURGERS -->
-  <div class="seccion" id="sec-burgers">
-    <div class="seccion-titulo">🍔 Burgers</div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="b1" data-nombre="Hamburguesa Clásica" data-precio="3500" data-emoji="🍔">
-      <div class="prod-emoji">🍔</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Hamburguesa Clásica</div>
-        <div class="prod-desc">Carne 200g, lechuga, tomate, cebolla, salsa especial</div>
-        <div class="prod-precio">$3.500</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="b2" data-nombre="Hamburguesa Doble" data-precio="4800" data-emoji="🍔">
-      <div class="prod-emoji">🍔</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Hamburguesa Doble</div>
-        <div class="prod-desc">Doble carne 400g, doble cheddar, pepinos, mostaza</div>
-        <div class="prod-precio">$4.800</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="b3" data-nombre="Burger Especial" data-precio="5500" data-emoji="🥩">
-      <div class="prod-emoji">🥩</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Burger Especial</div>
-        <div class="prod-desc">Carne 250g, cheddar fundido, bacon crocante, huevo frito</div>
-        <div class="prod-precio">$5.500</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="b4" data-nombre="Burger Veggie" data-precio="4200" data-emoji="🌱">
-      <div class="prod-emoji">🌱</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Burger Veggie</div>
-        <div class="prod-desc">Medallón de garbanzo, rúcula, tomate, mayonesa de limón</div>
-        <div class="prod-precio">$4.200</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAPAS -->
-  <div class="seccion" id="sec-papas">
-    <div class="seccion-titulo">🍟 Papas</div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="p1" data-nombre="Papas Fritas" data-precio="1500" data-emoji="🍟">
-      <div class="prod-emoji">🍟</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Papas Fritas</div>
-        <div class="prod-desc">Crocantes, porción generosa con sal gruesa</div>
-        <div class="prod-precio">$1.500</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="p2" data-nombre="Papas con Cheddar" data-precio="2200" data-emoji="🧀">
-      <div class="prod-emoji">🧀</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Papas con Cheddar</div>
-        <div class="prod-desc">Papas fritas bañadas en salsa cheddar casera</div>
-        <div class="prod-precio">$2.200</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="p3" data-nombre="Papas Cargadas" data-precio="2800" data-emoji="🔥">
-      <div class="prod-emoji">🔥</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Papas Cargadas</div>
-        <div class="prod-desc">Cheddar + bacon + cebolla caramelizada + jalapeños</div>
-        <div class="prod-precio">$2.800</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- COMBOS -->
-  <div class="seccion" id="sec-combos">
-    <div class="seccion-titulo">🎁 Combos</div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="c1" data-nombre="Combo Clásico" data-precio="5500" data-emoji="🎁">
-      <div class="prod-emoji">🎁</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Combo Clásico</div>
-        <div class="prod-desc">Burger Clásica + Papas Fritas + Gaseosa 500ml</div>
-        <div class="prod-precio">$5.500</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="c2" data-nombre="Combo Doble" data-precio="6800" data-emoji="💥">
-      <div class="prod-emoji">💥</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Combo Doble</div>
-        <div class="prod-desc">Burger Doble + Papas con Cheddar + Gaseosa 500ml</div>
-        <div class="prod-precio">$6.800</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="c3" data-nombre="Combo Familiar" data-precio="14500" data-emoji="👨‍👩‍👧‍👦">
-      <div class="prod-emoji">👨‍👩‍👧‍👦</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Combo Familiar</div>
-        <div class="prod-desc">2 Burger Doble + Papas Cargadas + 2 Gaseosas 500ml</div>
-        <div class="prod-precio">$14.500</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BEBIDAS -->
-  <div class="seccion" id="sec-bebidas">
-    <div class="seccion-titulo">🥤 Bebidas</div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="be1" data-nombre="Gaseosa 500ml" data-precio="900" data-emoji="🥤">
-      <div class="prod-emoji">🥤</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Gaseosa 500ml</div>
-        <div class="prod-desc">Coca-Cola, Sprite o Fanta · a elección</div>
-        <div class="prod-precio">$900</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="be2" data-nombre="Agua Mineral" data-precio="700" data-emoji="💧">
-      <div class="prod-emoji">💧</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Agua Mineral</div>
-        <div class="prod-desc">500ml · con o sin gas</div>
-        <div class="prod-precio">$700</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="producto" onclick="toggleProducto(this)" data-id="be3" data-nombre="Jugo Natural" data-precio="1200" data-emoji="🍊">
-      <div class="prod-emoji">🍊</div>
-      <div class="prod-info">
-        <div class="prod-nombre">Jugo Natural</div>
-        <div class="prod-desc">Naranja, manzana o durazno · 400ml</div>
-        <div class="prod-precio">$1.200</div>
-      </div>
-      <div class="prod-accion">
-        <button class="btn-agregar" onclick="event.stopPropagation(); agregarDesdeBtn(this)">+</button>
-        <div class="contador-inline">
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, -1)">−</button>
-          <span class="cnt-num">0</span>
-          <button class="cnt-btn" onclick="event.stopPropagation(); cambiarCant(this, 1)">+</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <!-- CARRITO FLOTANTE -->
 <div id="carrito-bar">
   <button class="btn-carrito" onclick="abrirModal()">
-    <span class="wa-icon">🛒</span>
-    <div class="carrito-texto">
-      <span class="carrito-titulo">Ver mi pedido</span>
-      <span class="carrito-sub" id="carrito-sub">0 productos seleccionados</span>
-    </div>
-    <span class="carrito-total" id="carrito-total-bar">$0</span>
     <div class="carrito-badge" id="carrito-badge">0</div>
+    <span class="carrito-texto">Ver pedido</span>
+    <span class="carrito-total-btn" id="carrito-total-bar">$0</span>
   </button>
 </div>
 
-<!-- MODAL RESUMEN -->
+<!-- MODAL -->
 <div id="overlay" onclick="cerrarModal(event)">
   <div id="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-titulo">Tu pedido 🛍️</div>
-
-    <div id="resumen-lista"></div>
-
-    <div class="resumen-total">
-      <span>Total</span>
-      <span id="modal-total">$0</span>
+    <div class="modal-header">
+      <div class="modal-handle"></div>
+      <div class="modal-titulo">Tu pedido 🛍️</div>
     </div>
+    <div class="modal-body">
 
-    <div class="tipo-label">¿Cómo lo querés?</div>
-    <div class="tipo-opciones">
-      <button class="tipo-btn sel" id="btn-delivery" onclick="selTipo('delivery')">
-        <span class="tipo-icon">🛵</span>
-        <span class="tipo-txt">Delivery</span>
-      </button>
-      <button class="tipo-btn" id="btn-retiro" onclick="selTipo('retiro')">
-        <span class="tipo-icon">🏪</span>
-        <span class="tipo-txt">Retiro en local</span>
-      </button>
-    </div>
+      <div id="resumen-lista"></div>
 
-    <div id="campo-direccion" class="visible">
-      <input type="text" id="input-direccion" placeholder="📍 Ingresá tu dirección de entrega" />
-    </div>
+      <div class="resumen-total-wrap">
+        <div class="total-fila"><span>Subtotal</span><span id="modal-subtotal">$0</span></div>
+        <div class="total-fila"><span>Envío</span><span>A confirmar</span></div>
+        <div class="total-fila grande"><span>Total</span><span id="modal-total">$0</span></div>
+      </div>
 
-    <div class="pago-label">💳 ¿Cómo vas a pagar?</div>
-    <div class="pago-opciones">
-      <button class="pago-btn sel" id="pago-efectivo" onclick="selPago('efectivo')">
-        <span class="pago-icon">💵</span>
-        <div class="pago-info">
-          <span class="pago-nombre">Efectivo</span>
-          <span class="pago-desc">Pagás al recibir o retirar</span>
+      <div class="seccion-modal">
+        <div class="modal-label">¿Cómo lo querés recibir?</div>
+        <div class="tipo-opciones">
+          <button class="tipo-btn sel" id="btn-delivery" onclick="selTipo('delivery')">
+            <span class="tipo-icon">🛵</span>
+            <span class="tipo-txt">Delivery</span>
+          </button>
+          <button class="tipo-btn" id="btn-retiro" onclick="selTipo('retiro')">
+            <span class="tipo-icon">🏪</span>
+            <span class="tipo-txt">Retiro en local</span>
+          </button>
         </div>
-        <div class="pago-check">✓</div>
-      </button>
-      <button class="pago-btn" id="pago-transferencia" onclick="selPago('transferencia')">
-        <span class="pago-icon">📱</span>
-        <div class="pago-info">
-          <span class="pago-nombre">Transferencia bancaria</span>
-          <span class="pago-desc">Ves los datos antes de confirmar</span>
+        <div id="campo-direccion" class="visible">
+          <input type="text" id="input-direccion" placeholder="📍 Ingresá tu dirección" />
         </div>
-        <div class="pago-check">✓</div>
-      </button>
-      <button class="pago-btn" id="pago-mercadopago" onclick="selPago('mercadopago')">
-        <span class="pago-icon">🟦</span>
-        <div class="pago-info">
-          <span class="pago-nombre">Mercado Pago</span>
-          <span class="pago-desc">Te enviamos el link o QR de pago</span>
+      </div>
+
+      <div class="seccion-modal">
+        <div class="modal-label">¿Cómo vas a pagar?</div>
+        <div class="pago-opciones">
+          <button class="pago-btn sel" id="pago-efectivo" onclick="selPago('efectivo')">
+            <span class="pago-icon">💵</span>
+            <div class="pago-info">
+              <span class="pago-nombre">Efectivo</span>
+              <span class="pago-desc">Pagás al recibir o retirar</span>
+            </div>
+            <div class="pago-check">✓</div>
+          </button>
+          <button class="pago-btn" id="pago-transferencia" onclick="selPago('transferencia')">
+            <span class="pago-icon">📱</span>
+            <div class="pago-info">
+              <span class="pago-nombre">Transferencia bancaria</span>
+              <span class="pago-desc">Ves los datos antes de confirmar</span>
+            </div>
+            <div class="pago-check">✓</div>
+          </button>
+          <button class="pago-btn" id="pago-mercadopago" onclick="selPago('mercadopago')">
+            <span class="pago-icon">🟦</span>
+            <div class="pago-info">
+              <span class="pago-nombre">Mercado Pago</span>
+              <span class="pago-desc">Te enviamos el link o QR de pago</span>
+            </div>
+            <div class="pago-check">✓</div>
+          </button>
         </div>
-        <div class="pago-check">✓</div>
+
+        <div id="caja-transferencia">
+          <div class="transf-titulo">🏦 Datos para transferir</div>
+          <div class="transf-fila"><span class="transf-label">Titular</span><span class="transf-val">Nicolas Villalon</span></div>
+          <div class="transf-fila"><span class="transf-label">Alias</span><span class="transf-val transf-copy" onclick="copiar('nicolasvillalon', this)">nicolasvillalon 📋</span></div>
+          <div class="transf-fila"><span class="transf-label">CBU</span><span class="transf-val transf-copy" onclick="copiar('CBU_DE_NICOLAS', this)">CBU_DE_NICOLAS 📋</span></div>
+          <div class="transf-fila"><span class="transf-label">Monto</span><span class="transf-val" id="transf-monto">$0</span></div>
+          <div class="transf-aviso">📎 Una vez transferido, enviá el comprobante por WhatsApp para confirmar tu pedido.</div>
+        </div>
+      </div>
+
+      <button class="btn-confirmar" onclick="confirmarPedido()">
+        <span>💬</span> Enviar pedido por WhatsApp
       </button>
-    </div>
+      <button class="btn-cancelar" onclick="cerrarModal()">Seguir eligiendo</button>
 
-    <!-- CAJA DE DATOS DE TRANSFERENCIA (se muestra solo si elige esa opción) -->
-    <div id="caja-transferencia">
-      <div class="transf-titulo">🏦 Datos para transferir</div>
-      <div class="transf-fila"><span class="transf-label">Titular</span><span class="transf-val">Nicolas Villalon</span></div>
-      <div class="transf-fila"><span class="transf-label">Alias</span><span class="transf-val transf-copy" onclick="copiar('nicolasvillalon', this)">nicolasvillalon 📋</span></div>
-      <div class="transf-fila"><span class="transf-label">CBU</span><span class="transf-val transf-copy" onclick="copiar('CBU_DE_NICOLAS', this)">CBU_DE_NICOLAS 📋</span></div>
-      <div class="transf-fila"><span class="transf-label">Monto</span><span class="transf-val" id="transf-monto" style="color:var(--verde);font-weight:700;">$0</span></div>
-      <div class="transf-aviso">📎 Una vez transferido, enviá el comprobante por WhatsApp para confirmar tu pedido.</div>
     </div>
-
-    <button class="btn-confirmar" onclick="confirmarPedido()">
-      <span>💬</span> Enviar pedido por WhatsApp
-    </button>
-    <button class="btn-cancelar" onclick="cerrarModal()">Seguir eligiendo</button>
   </div>
 </div>
 
 <script>
-  // ── NÚMERO DE WHATSAPP DEL LOCAL (con código de país, sin +) ──
-  // CAMBIÁ ESTE NÚMERO POR EL DEL LOCAL
   const WA_NUMERO = "5493513340521";
 
-  // ── CARRITO ──
-  let carrito = {};
-  let tipoEntrega = "delivery";
-  let tipoPago = "efectivo";
+  let carrito = {}, tipoEntrega = "delivery", tipoPago = "efectivo";
 
-  function getProductoEl(el) {
-    return el.closest(".producto");
-  }
+  function getProd(el) { return el.closest(".producto"); }
 
   function agregarDesdeBtn(btn) {
-    const prod = getProductoEl(btn);
-    const id = prod.dataset.id;
-    if (!carrito[id]) {
-      carrito[id] = {
-        nombre: prod.dataset.nombre,
-        precio: parseInt(prod.dataset.precio),
-        emoji: prod.dataset.emoji,
-        cant: 0
-      };
-    }
+    const p = getProd(btn);
+    const id = p.dataset.id;
+    if (!carrito[id]) carrito[id] = { nombre: p.dataset.nombre, precio: parseInt(p.dataset.precio), emoji: p.dataset.emoji, cant: 0 };
     carrito[id].cant++;
-    actualizarCard(prod, id);
-    actualizarCarritoBar();
+    actualizarCard(p, id);
+    actualizarBar();
   }
 
   function cambiarCant(btn, delta) {
-    const prod = getProductoEl(btn);
-    const id = prod.dataset.id;
+    const p = getProd(btn);
+    const id = p.dataset.id;
     if (!carrito[id]) return;
     carrito[id].cant = Math.max(0, carrito[id].cant + delta);
     if (carrito[id].cant === 0) delete carrito[id];
-    actualizarCard(prod, id);
-    actualizarCarritoBar();
+    actualizarCard(p, id);
+    actualizarBar();
   }
 
-  function toggleProducto(prod) {
-    const id = prod.dataset.id;
-    if (!carrito[id]) {
-      carrito[id] = {
-        nombre: prod.dataset.nombre,
-        precio: parseInt(prod.dataset.precio),
-        emoji: prod.dataset.emoji,
-        cant: 1
-      };
-    }
-    actualizarCard(prod, id);
-    actualizarCarritoBar();
-  }
-
-  function actualizarCard(prod, id) {
-    const btnAgregar  = prod.querySelector(".btn-agregar");
-    const contador    = prod.querySelector(".contador-inline");
-    const numEl       = prod.querySelector(".cnt-num");
-    const cant        = carrito[id] ? carrito[id].cant : 0;
-
+  function actualizarCard(p, id) {
+    const btnA = p.querySelector(".btn-agregar");
+    const cnt  = p.querySelector(".contador-inline");
+    const num  = p.querySelector(".cnt-num");
+    const cant = carrito[id] ? carrito[id].cant : 0;
     if (cant > 0) {
-      btnAgregar.style.display = "none";
-      contador.classList.add("visible");
-      numEl.textContent = cant;
-      prod.classList.add("en-carrito");
-      prod.classList.add("pop");
-      setTimeout(() => prod.classList.remove("pop"), 250);
+      btnA.style.display = "none";
+      cnt.classList.add("visible");
+      num.textContent = cant;
+      p.classList.add("pop");
+      setTimeout(() => p.classList.remove("pop"), 200);
     } else {
-      btnAgregar.style.display = "flex";
-      contador.classList.remove("visible");
-      prod.classList.remove("en-carrito");
+      btnA.style.display = "flex";
+      cnt.classList.remove("visible");
     }
   }
 
-  function calcularTotal() {
-    return Object.values(carrito).reduce((s, i) => s + i.precio * i.cant, 0);
-  }
+  function total() { return Object.values(carrito).reduce((s,i) => s + i.precio * i.cant, 0); }
+  function cant()  { return Object.values(carrito).reduce((s,i) => s + i.cant, 0); }
+  function fmt(n)  { return "$" + n.toLocaleString("es-AR"); }
 
-  function cantItems() {
-    return Object.values(carrito).reduce((s, i) => s + i.cant, 0);
-  }
-
-  function formatPeso(n) {
-    return "$" + n.toLocaleString("es-AR");
-  }
-
-  function actualizarCarritoBar() {
-    const total = calcularTotal();
-    const cant  = cantItems();
-    const bar   = document.getElementById("carrito-bar");
-
-    if (cant > 0) {
+  function actualizarBar() {
+    const bar = document.getElementById("carrito-bar");
+    const c = cant();
+    if (c > 0) {
       bar.classList.add("visible");
-      document.getElementById("carrito-total-bar").textContent = formatPeso(total);
-      document.getElementById("carrito-badge").textContent = cant;
-      document.getElementById("carrito-sub").textContent =
-        cant + (cant === 1 ? " producto" : " productos");
+      document.getElementById("carrito-total-bar").textContent = fmt(total());
+      document.getElementById("carrito-badge").textContent = c;
     } else {
       bar.classList.remove("visible");
     }
   }
 
-  // ── MODAL ──
   function abrirModal() {
     const lista = document.getElementById("resumen-lista");
     lista.innerHTML = "";
-
     Object.values(carrito).forEach(item => {
-      const div = document.createElement("div");
-      div.className = "resumen-item";
-      div.innerHTML = `
-        <div>
-          <div class="resumen-nombre">${item.emoji} ${item.nombre}</div>
-          <div class="resumen-cant">x${item.cant}</div>
+      const d = document.createElement("div");
+      d.className = "resumen-item";
+      d.innerHTML = `
+        <div class="res-emoji">${item.emoji}</div>
+        <div class="res-info">
+          <div class="res-nombre">${item.nombre}</div>
+          <div class="res-cant">x${item.cant}</div>
         </div>
-        <div class="resumen-precio">${formatPeso(item.precio * item.cant)}</div>
-      `;
-      lista.appendChild(div);
+        <div class="res-precio">${fmt(item.precio * item.cant)}</div>`;
+      lista.appendChild(d);
     });
-
-    document.getElementById("modal-total").textContent = formatPeso(calcularTotal());
+    const t = total();
+    document.getElementById("modal-subtotal").textContent = fmt(t);
+    document.getElementById("modal-total").textContent = fmt(t);
+    document.getElementById("transf-monto").textContent = fmt(t);
     document.getElementById("overlay").classList.add("visible");
     document.body.style.overflow = "hidden";
   }
@@ -1457,18 +1223,18 @@
     tipoEntrega = tipo;
     document.getElementById("btn-delivery").classList.toggle("sel", tipo === "delivery");
     document.getElementById("btn-retiro").classList.toggle("sel", tipo === "retiro");
-    const campo = document.getElementById("campo-direccion");
-    tipo === "delivery" ? campo.classList.add("visible") : campo.classList.remove("visible");
+    const c = document.getElementById("campo-direccion");
+    tipo === "delivery" ? c.classList.add("visible") : c.classList.remove("visible");
   }
 
   function selPago(pago) {
     tipoPago = pago;
     ["efectivo","transferencia","mercadopago"].forEach(p => {
-      document.getElementById("pago-" + p).classList.toggle("sel", p === pago);
+      document.getElementById("pago-"+p).classList.toggle("sel", p === pago);
     });
     const caja = document.getElementById("caja-transferencia");
     if (pago === "transferencia") {
-      document.getElementById("transf-monto").textContent = formatPeso(calcularTotal());
+      document.getElementById("transf-monto").textContent = fmt(total());
       caja.classList.add("visible");
     } else {
       caja.classList.remove("visible");
@@ -1484,8 +1250,7 @@
   }
 
   function confirmarPedido() {
-    if (cantItems() === 0) return;
-
+    if (cant() === 0) return;
     const dir = document.getElementById("input-direccion").value.trim();
     if (tipoEntrega === "delivery" && !dir) {
       document.getElementById("input-direccion").focus();
@@ -1493,14 +1258,10 @@
       setTimeout(() => document.getElementById("input-direccion").style.borderColor = "", 2000);
       return;
     }
-
-    // Armar el mensaje
-    let msg = "🍔 *Pedido — La Esquina del Sabor*\n\n";
-    Object.values(carrito).forEach(item => {
-      msg += `• ${item.nombre} x${item.cant} — ${formatPeso(item.precio * item.cant)}\n`;
-    });
-    msg += `\n💰 *Total: ${formatPeso(calcularTotal())}*\n`;
-    msg += `\n📦 *Entrega: ${tipoEntrega === "delivery" ? "Delivery" : "Retiro en local"}*`;
+    let msg = "🍽️ *Pedido — La Esquina del Sabor*\n\n";
+    Object.values(carrito).forEach(i => { msg += `• ${i.nombre} x${i.cant} — ${fmt(i.precio * i.cant)}\n`; });
+    msg += `\n💰 *Total: ${fmt(total())}*`;
+    msg += `\n📦 *Entrega: ${tipoEntrega === "delivery" ? "Delivery 🛵" : "Retiro en local 🏪"}*`;
     if (tipoEntrega === "delivery" && dir) msg += `\n📍 *Dirección: ${dir}*`;
     const pagoTexto = { efectivo: "💵 Efectivo", transferencia: "📱 Transferencia bancaria", mercadopago: "🟦 Mercado Pago" };
     msg += `\n💳 *Pago: ${pagoTexto[tipoPago]}*`;
@@ -1509,33 +1270,27 @@
       msg += `\n👤 Titular: Nicolas Villalon`;
       msg += `\n🔑 Alias: nicolasvillalon`;
       msg += `\n🔢 CBU: CBU_DE_NICOLAS`;
-      msg += `\n💰 Monto exacto: ${formatPeso(calcularTotal())}`;
+      msg += `\n💰 Monto exacto: ${fmt(total())}`;
       msg += `\n\n_Por favor enviá el comprobante por este chat_ 📎`;
     }
     msg += "\n\n_Pedido enviado desde la carta digital_ ✅";
-
-    const url = `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    window.open(`https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
-  // ── SCROLL A SECCIÓN ──
-  function scrollTo(sec) {
-    document.getElementById("sec-" + sec).scrollIntoView({ behavior: "smooth", block: "start" });
+  function irA(sec, btn) {
+    document.getElementById("sec-"+sec).scrollIntoView({ behavior:"smooth", block:"start" });
     document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("activo"));
-    event.target.classList.add("activo");
+    btn.classList.add("activo");
   }
 
-  // ── DETECTAR SECCIÓN ACTIVA AL SCROLLEAR ──
-  const secciones = ["principales", "empanadas", "guarniciones", "postres", "bebidas"];
+  const secciones = ["principales","empanadas","guarniciones","postres","bebidas"];
   window.addEventListener("scroll", () => {
     let actual = 0;
-    secciones.forEach((s, i) => {
-      const el = document.getElementById("sec-" + s);
-      if (el && el.getBoundingClientRect().top < 150) actual = i;
+    secciones.forEach((s,i) => {
+      const el = document.getElementById("sec-"+s);
+      if (el && el.getBoundingClientRect().top < 120) actual = i;
     });
-    document.querySelectorAll(".cat-btn").forEach((b, i) => {
-      b.classList.toggle("activo", i === actual);
-    });
+    document.querySelectorAll(".cat-btn").forEach((b,i) => b.classList.toggle("activo", i === actual));
   });
 </script>
 </body>
